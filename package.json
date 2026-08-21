@@ -1,0 +1,7 @@
+{
+  "name": "guo-shuang-insurance-site",
+  "private": true,
+  "scripts": {
+    "build:site": "node build-site.mjs"
+  }
+}
