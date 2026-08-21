@@ -4,7 +4,7 @@ const dashboard = document.querySelector('#dashboard');
 const form = document.querySelector('#article-form');
 let articles = [];
 const request = async (path, options = {}) => { const response = await fetch(`${api}${path}`, { credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, ...options }); const data = await response.json(); if (!response.ok) throw new Error(data.error || '请求失败。'); return data; };
-const reset = () => form.reset();
+const reset = () => HTMLFormElement.prototype.reset.call(form);
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 const render = () => { document.querySelector('#articles').innerHTML = articles.map(article => `<article class="article"><div><h2>${escapeHtml(article.title)}</h2><p>📅 ${escapeHtml(article.date)} ｜ 标签：${article.tags.map(escapeHtml).join('、')}</p></div><div><button data-edit="${escapeHtml(article.id)}">编辑</button><button data-delete="${escapeHtml(article.id)}">删除</button></div></article>`).join(''); };
 const load = async () => { articles = await request('/articles'); render(); };
