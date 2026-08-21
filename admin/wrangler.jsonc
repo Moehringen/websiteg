@@ -15,7 +15,7 @@
     {
       "binding": "DB",
       "database_name": "guo-shuang-articles",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "403a8724-2a1f-4dea-be69-fb3ae905e7aa",
       "migrations_dir": "migrations"
     }
   ]
