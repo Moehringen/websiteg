@@ -1,0 +1,5 @@
+dist/
+requirement.pdf
+websiteg.pages
+.wrangler/
+node_modules/

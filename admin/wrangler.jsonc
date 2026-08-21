@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "guo-shuang-article-admin",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-08-20",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "PUBLIC_SITE_ORIGIN": "https://replace-with-your-public-site-domain"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "guo-shuang-articles",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
