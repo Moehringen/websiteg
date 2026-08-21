@@ -1,1 +1,54 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文章后台</title><link rel="stylesheet" href="style.css"><body><main><section id="login"><p>文章后台</p><h1>登录</h1><form id="login-form"><input name="password" type="password" placeholder="密码" required><button>登录</button></form><small id="login-error"></small></section><section id="dashboard" hidden><header><div><p>文章后台</p><h1>文章管理</h1></div><button id="logout">退出</button></header><form id="article-form"><input name="id" type="hidden"><label>标题<input name="title" required></label><label>发布时间<input name="date" type="date" required></label><label>文章分类标签<input name="tags" placeholder="用逗号分隔"></label><label>正文<textarea name="content" rows="12"></textarea></label><div class="actions"><button>保存文章</button><button id="reset" type="button">清空</button></div></form><div id="articles"></div></section></main><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>文章后台</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <section id="login">
+        <p>文章后台</p>
+        <h1>登录</h1>
+        <form id="login-form">
+          <input name="password" type="password" placeholder="密码" required>
+          <button>登录</button>
+        </form>
+        <small id="login-error"></small>
+      </section>
+      <section id="dashboard" hidden>
+        <header>
+          <div><p>文章后台</p><h1>文章管理</h1></div>
+          <button id="logout" type="button">退出</button>
+        </header>
+        <form id="article-form">
+          <input name="id" type="hidden">
+          <h2 id="form-heading">发布新文章</h2>
+          <label>标题<input name="title" required></label>
+          <label>发布时间<input name="date" type="date" required></label>
+          <label>文章分类标签<input name="tags" placeholder="用逗号分隔"></label>
+          <div class="editor-label">正文</div>
+          <div class="editor-toolbar" aria-label="富文本工具栏">
+            <button type="button" data-command="bold"><strong>加粗</strong></button>
+            <button type="button" data-command="italic"><em>斜体</em></button>
+            <button type="button" data-command="underline"><u>下划线</u></button>
+            <button type="button" data-command="insertUnorderedList">列表</button>
+            <button type="button" data-action="link">链接</button>
+            <button type="button" data-action="image-url">图片链接</button>
+            <button type="button" data-action="image-upload">上传图片</button>
+          </div>
+          <div id="content-editor" class="content-editor" contenteditable="true" data-placeholder="在这里输入文章正文；可使用工具栏排版、插入图片。"></div>
+          <input id="image-upload" type="file" accept="image/*" hidden>
+          <p class="editor-help">上传图片将嵌入文章内容；单张图片请控制在 1MB 以内。</p>
+          <div class="actions">
+            <button id="save-article">发布文章</button>
+            <button id="reset" type="button">取消编辑</button>
+          </div>
+        </form>
+        <div id="articles"></div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
