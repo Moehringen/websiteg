@@ -4,10 +4,10 @@
 
 ## 推荐：部署到 Cloudflare Pages
 
-将本目录作为 Pages 项目的根目录，静态后台页面由 `public` 提供，`functions/api/[[path]].js` 提供 `/api/*` 接口。`public/_routes.json` 已限定为只有 API 请求运行函数，后台页面和样式保持静态访问。
+Pages 专用文件位于 `admin/pages`，与旧 Worker 的部署配置完全分开。构建时会复制后台页面和共用 API 代码；`functions/api/[[path]].js` 提供 `/api/*` 接口。`_routes.json` 已限定为只有 API 请求运行函数，后台页面和样式保持静态访问。
 
 1. 在 Cloudflare 创建一个新的 Pages 项目，连接本仓库。
-2. 将 **Root directory** 设为 `admin`，**Build command** 留空，**Build output directory** 设为 `public`。
+2. 将 **Root directory** 设为 `admin/pages`，**Build command** 设为 `node build.mjs`，**Build output directory** 设为 `public`。
 3. 在 Pages 项目的 **Settings > Bindings** 中添加 D1：变量名为 `DB`，选择既有的 `guo-shuang-articles` 数据库。
 4. 在 **Settings > Variables and Secrets** 中添加：
    - 文本变量 `PUBLIC_SITE_ORIGIN`：公开网站域名，例如 `https://websiteg-8s4.pages.dev`。
