@@ -11,9 +11,28 @@ const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(
 
 const cors = (request, env) => {
   const origin = request.headers.get('Origin');
-  const allowedOrigin = env.PUBLIC_SITE_ORIGIN;
+  const configuredOrigins = String(env.PUBLIC_SITE_ORIGIN || '')
+    .split(',')
+    .map(value => value.trim())
+    .filter(Boolean);
+  const allowedOrigins = new Set();
 
-  return origin && allowedOrigin && origin === allowedOrigin
+  for (const configuredOrigin of configuredOrigins) {
+    try {
+      const url = new URL(configuredOrigin);
+      allowedOrigins.add(url.origin);
+      url.hostname = url.hostname.startsWith('www.')
+        ? url.hostname.slice('www.'.length)
+        : `www.${url.hostname}`;
+      allowedOrigins.add(url.origin);
+    } catch {
+      continue;
+    }
+  }
+
+  const allowedOrigin = origin && allowedOrigins.has(origin) ? origin : null;
+
+  return allowedOrigin
     ? { 'Access-Control-Allow-Origin': allowedOrigin, Vary: 'Origin' }
     : { Vary: 'Origin' };
 };
