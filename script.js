@@ -14,13 +14,16 @@ const safeUrl = (value, image = false) => {
   try { const url = new URL(source); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; }
 };
 const richContent = html => {
-  const allowed = new Set(['P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'H2', 'H3', 'BLOCKQUOTE', 'UL', 'OL', 'LI', 'A', 'IMG']);
+  const allowed = new Set(['P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'H1', 'H2', 'H3', 'H4', 'BLOCKQUOTE', 'UL', 'OL', 'LI', 'A', 'IMG', 'DIV', 'SECTION', 'SPAN', 'FIGURE', 'FIGCAPTION', 'HR', 'PRE', 'CODE']);
+  const blocked = new Set(['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'FORM', 'INPUT', 'BUTTON', 'LINK', 'META', 'BASE', 'SVG', 'MATH']);
   const documentFragment = document.createDocumentFragment();
   const source = new DOMParser().parseFromString(String(html || ''), 'text/html');
   const copy = node => {
     if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.textContent || '');
-    if (node.nodeType !== Node.ELEMENT_NODE || !allowed.has(node.tagName)) return null;
-    const element = document.createElement(node.tagName.toLowerCase());
+    if (node.nodeType !== Node.ELEMENT_NODE || blocked.has(node.tagName)) return null;
+    const element = allowed.has(node.tagName)
+      ? document.createElement(node.tagName.toLowerCase())
+      : document.createDocumentFragment();
     if (node.tagName === 'A') { const href = safeUrl(node.getAttribute('href')); if (href) { element.href = href; element.target = '_blank'; element.rel = 'noopener noreferrer'; } }
     if (node.tagName === 'IMG') { const src = safeUrl(node.getAttribute('src'), true); if (!src) return null; element.src = src; element.alt = node.getAttribute('alt') || ''; element.loading = 'lazy'; element.style.maxWidth = '100%'; element.style.height = 'auto'; }
     node.childNodes.forEach(child => { const copied = copy(child); if (copied) element.append(copied); });
