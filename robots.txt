@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://websiteg-8s4.pages.dev/sitemap.xml
+User-agent: Baiduspider
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+Sitemap: https://www.guoshuang.space/sitemap.xml
